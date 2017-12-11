@@ -2,7 +2,7 @@ const logger = require('./src/core/logger')
 const mongo = require('./src/core/mongo')
 const emitter = require('./src/core/emitter')
 const instanceCreator = require('./src/instance-creator')
-const processKeeper = require('./src/processKeeper')
+const processKeeper = require('./src/process-manager')
 
 // Define env
 global.env = process.env.NODE_ENV || 'dev'
