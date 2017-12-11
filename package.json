@@ -1,12 +1,14 @@
 {
-  "name": "vodalys-k8s",
+  "name": "k8s_stuff",
   "version": "1.0.0",
   "scripts": {
     "start": "node main.js",
     "eslint": "node node_modules/eslint/bin/eslint main.js src --fix"
   },
   "dependencies": {
-    "amqplib": "^0.5.2"
+    "mongodb": "^3.0.0-rc0",
+    "ovh": "^2.0.1",
+    "winston": "^3.0.0-rc1"
   },
   "devDependencies": {
     "eslint": "^4.12.0",
