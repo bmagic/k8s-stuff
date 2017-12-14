@@ -31,7 +31,7 @@ module.exports.start = () => {
         global.emitter.emit(events.node_add, node.insertedId)
       })
       .catch((error) => {
-        if (error.message) { global.logger.error(`[process-manager] ${error}`) }
+        if (error.message) { global.logger.error(`[process-manager] ${error.message}`) }
       })
   })
 }
