@@ -6,6 +6,7 @@
     "eslint": "node node_modules/eslint/bin/eslint main.js src --fix"
   },
   "dependencies": {
+    "kubernetes-client": "^3.17.1",
     "mongodb": "^3.0.0-rc0",
     "ovh": "^2.0.1",
     "winston": "^3.0.0-rc1"

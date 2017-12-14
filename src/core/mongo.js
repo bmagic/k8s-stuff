@@ -3,9 +3,9 @@ module.exports.connect = () => {
     const MongoClient = require('mongodb').MongoClient
 
     // Connection URL
-    const url = 'mongodb://localhost:27017'
+    const url = 'mongodb://192.168.1.10:27017'
 
-    const dbName = 'k8s_stuff'
+    const dbName = 'k8s-manager'
     MongoClient.connect(url)
       .then((client) => {
         global.logger.info('Mongo database connected')
