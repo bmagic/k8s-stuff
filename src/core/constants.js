@@ -12,5 +12,6 @@ module.exports.states = Object.freeze({
 
 module.exports.events = Object.freeze({
   k8s_add: 'K8S_ADD',
-  node_add: 'NODE_ADD'
+  add_node: 'ADD_NODE',
+  send_mail: 'SEND_MAIL'
 })

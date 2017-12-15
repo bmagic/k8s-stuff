@@ -1,37 +1,30 @@
 const {states, events} = require('./core/constants')
 
-module.exports.start = () => {
+module.exports.start = async () => {
   const collection = global.db.collection('nodes')
 
-  // Node state is init then dispatch node.add
-  collection.find({state: states.init}, {projection: {_id: 1}}).toArray()
-    .then((nodes) => {
-      nodes.forEach((node) => global.emitter.emit(events.node_add, node._id))
-    })
-    .catch((error) => global.logger.error(`[process-manager] ${error}`))
+  try {
+    // Node state is init then dispatch node.add
+    const nodes = await collection.find({state: states.init}, {projection: {_id: 1}}).toArray()
+    nodes.forEach((node) => global.emitter.emit(events.add_node, node._id))
+  } catch (error) {
+    global.logger.error({module: 'process-manager', err: error})
+  }
 
   /**
    * ON EVENT K8S_ADD
    */
-  global.emitter.on(events.k8s_add, () => {
-    // Check current process
-    collection.count({$and: [{state: {$ne: states.running}}, {state: {$ne: states.error}}]})
-      .then((count) => {
-        if (count === 0) {
-          const node = {
-            state: states.init
-          }
-          return collection.insertOne(node)
-        } else {
-          global.logger.verbose('[process-manager] A node is already plan to arrive. I wait.')
-          throw new Error()
-        }
-      })
-      .then((node) => {
-        global.emitter.emit(events.node_add, node.insertedId)
-      })
-      .catch((error) => {
-        if (error.message) { global.logger.error(`[process-manager] ${error.message}`) }
-      })
+  global.emitter.on(events.k8s_add, async () => {
+    try {
+      const count = await collection.count({$and: [{state: {$ne: states.running}}, {state: {$ne: states.error}}]})
+      if (count === 0) {
+        const node = await collection.insertOne({state: states.init})
+        global.emitter.emit(events.add_node, node.insertedId)
+      } else {
+        global.logger.debug({module: 'process-manager'}, 'A node is already plan to arrive. I wait.')
+      }
+    } catch (error) {
+      global.logger.error({module: 'process-manager', err: error})
+    }
   })
 }

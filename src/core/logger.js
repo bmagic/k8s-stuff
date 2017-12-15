@@ -1,20 +1,14 @@
+const DEBUG_LEVEL = process.env.DEBUG_LEVEL
 
 module.exports.createLogger = () => {
-  const winston = require('winston')
-  const LOG_LEVEL = process.env.LOG_LEVEL || 'debug'
-
-  let format = winston.format.simple()
-  if (global.env === 'production') { format = winston.format.combine(winston.format.timestamp(), winston.format.json()) }
-
-  global.logger = winston.createLogger({
-    level: LOG_LEVEL,
-    format: format,
-    transports: [
-      new winston.transports.Console({
-        handleExceptions: true
-      })
-    ],
-    exitOnError: false
+  const bunyan = require('bunyan')
+  global.logger = bunyan.createLogger({
+    name: 'k8s-manager',
+    level: DEBUG_LEVEL,
+    serializers: {
+      err: bunyan.stdSerializers.err
+    }
   })
-  global.logger.info('Winston logger initialized')
+
+  global.logger.info('Logger initialized')
 }
