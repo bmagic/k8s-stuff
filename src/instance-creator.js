@@ -13,12 +13,22 @@ module.exports.start = () => {
     try {
       const instance = await ovhUtils.addInstance(id)
       await collection.updateOne({_id: ObjectID(id)}, {$set: {state: states.adding, data: instance}})
+      // TODO Dispatch event on added node
     } catch (error) {
       global.logger.error({module: 'instance-creator', err: error})
       global.emitter.emit(events.send_mail, 'Error in instance-creator', error.message)
     }
   })
 
-// TODO check every 10 sec the state of the instance on OVH API
+  global.emitter.on(events.adding_node, async () => {
+    // TODO Start Loop on checking instance
+    // If state = build
+    //    setTimeout 10 sec and emit adding_node
+    // Else state = error
+    //    update mongo to ERROR
+    //    emit send_mail
+    // Else state = success
+    //    Update mongo to added
+    //    emit added_node
+  })
 }
-

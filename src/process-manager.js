@@ -10,6 +10,7 @@ module.exports.start = async () => {
   } catch (error) {
     global.logger.error({module: 'process-manager', err: error})
   }
+  // TODO CHECK ADDING STATE AND DISPATCH adding_node event
 
   /**
    * ON EVENT K8S_ADD
