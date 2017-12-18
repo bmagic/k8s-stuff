@@ -18,6 +18,12 @@ module.exports.addInstance = async function (id) {
   return instance
 }
 
+module.exports.getInstance = async function (instanceId) {
+  global.logger.debug({module: 'ovh-utils'}, `/cloud/project/${OVH_CLOUD_PROJECT_ID}/instance/${instanceId}`)
+  const instance = await ovh.requestPromised('GET', `/cloud/project/${OVH_CLOUD_PROJECT_ID}/instance/${instanceId}`)
+  return instance
+}
+
 async function getAvailableFlavorId () {
   // S1-2 (2Go RAM 1vCore 0.012€/H) : eeb4ccc9-faa0-4afb-955e-6a0224f93055
   // G1-15 (15Go RAM 4vCore GTX1070 0.478€/H) : 989a9a6c-2404-472b-8530-f4cd42abf98d

@@ -1,4 +1,4 @@
-const { events } = require('./core/constants')
+// const { events } = require('./core/constants')
 module.exports.start = () => {
   // Connect to k8s
   // const Api = require('kubernetes-client')

@@ -12,6 +12,7 @@
     "kubernetes-client": "^3.17.1",
     "mongodb": "^3.0.0-rc0",
     "node-mailjet": "^3.2.1",
+    "node-ssh": "^5.0.0",
     "ovh": "^2.0.1"
   },
   "devDependencies": {

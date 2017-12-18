@@ -5,6 +5,8 @@ const mongo = require('./src/core/mongo')
 const emitter = require('./src/core/emitter')
 
 const instanceCreator = require('./src/instance-creator')
+const instanceChecker = require('./src/instance-checker')
+const instanceConfigurator = require('./src/instance-configurator')
 const processManager = require('./src/process-manager')
 const k8sEventChecker = require('./src/k8s-events-checker')
 const mailSender = require('./src/mail-sender')
@@ -19,8 +21,10 @@ async function start () {
   await mongo.connect()
 
   mailSender.start()
-  instanceCreator.start()
   k8sEventChecker.start()
+  instanceCreator.start()
+  instanceChecker.start()
+  instanceConfigurator.start()
 
   await processManager.start()
 }
